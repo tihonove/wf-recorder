@@ -15,6 +15,7 @@
 .Op Fl d, -device Ar encoding_device
 .Op Fl -no-dmabuf
 .Op Fl D, -no-damage
+.Op Fl -no-cursor
 .Op Fl f, -file Ar filename.ext
 .Op Fl F Ar filter_string
 .Op Fl g, -geometry Ar geometry
@@ -103,6 +104,9 @@ only when the screen updates. This results in a much smaller output
 file, which however has a variable refresh rate. When this option is
 on, wf-recorder does not use this optimization and continuously
 records new frames, even if there are no updates on the screen.
+.Pp
+.It Fl -no-cursor
+Do not draw the mouse cursor into the recording.
 .Pp
 .It Fl f , -file Ar filename.ext
 By using the

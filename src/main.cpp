@@ -264,6 +264,7 @@ void free_shm_buffer(wf_buffer& buffer)
 }
 
 static bool use_damage = true;
+static bool overlay_cursor = true;
 static bool use_dmabuf = false;
 static bool use_hwupload = false;
 
@@ -928,6 +929,8 @@ Use Ctrl+C to stop.)");
                             on, wf-recorder does not use this optimization and continuously
                             records new frames, even if there are no updates on the screen.
 
+  --no-cursor               Do not draw the mouse cursor into the recording.
+
   -f <filename>.ext         By using the -f option the output file will have the name :
                             filename.ext and the file format will be determined by provided
                             while extension .ext . If the extension .ext provided is not
@@ -1031,11 +1034,11 @@ void request_next_frame()
     if (!selected_region.is_selected())
     {
         frame = zwlr_screencopy_manager_v1_capture_output(
-            screencopy_manager, 1, chosen_output->output);
+            screencopy_manager, overlay_cursor, chosen_output->output);
     } else
     {
         frame = zwlr_screencopy_manager_v1_capture_output_region(
-            screencopy_manager, 1, chosen_output->output,
+            screencopy_manager, overlay_cursor, chosen_output->output,
             selected_region.x - chosen_output->x,
             selected_region.y - chosen_output->y,
             selected_region.width, selected_region.height);
@@ -1123,6 +1126,7 @@ int main(int argc, char *argv[])
         { "buffrate",          required_argument, NULL, 'B' },
         { "version",           no_argument,       NULL, 'v' },
         { "no-damage",         no_argument,       NULL, 'D' },
+        { "no-cursor",         no_argument,       NULL, '~' },
         { "overwrite",         no_argument,       NULL, 'y' },
         { "list-output",       no_argument,       NULL, 'L' },
         { 0,                   0,                 NULL,  0  }
@@ -1217,6 +1221,10 @@ int main(int argc, char *argv[])
 
             case 'D':
                 use_damage = false;
+                break;
+
+            case '~':
+                overlay_cursor = false;
                 break;
 
             case 'P':
