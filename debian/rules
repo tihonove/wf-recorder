@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+include /usr/share/dpkg/architecture.mk
+
+%:
+	dh $@ --buildsystem=meson
+
+override_dh_auto_configure:
+	dh_auto_configure -- -Dpulse=enabled -Dpipewire=enabled
+
+# Only the binary and the man page, under our own name: everything else (fish
+# completions) ships in the distribution's wf-recorder and would conflict with it.
+override_dh_auto_install:
+	install -Dm755 obj-$(DEB_HOST_GNU_TYPE)/wf-recorder debian/wf-recorder-nc/usr/bin/wf-recorder-nc
+	install -Dm644 manpage/wf-recorder.1 debian/wf-recorder-nc/usr/share/man/man1/wf-recorder-nc.1

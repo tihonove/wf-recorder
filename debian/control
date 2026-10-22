@@ -1,0 +1,19 @@
+Source: wf-recorder-nc
+Section: video
+Priority: optional
+Maintainer: Eugene Tihonov <tihonov.ea@gmail.com>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, pkg-config,
+ libwayland-dev, wayland-protocols, libgbm-dev, libdrm-dev,
+ libavcodec-dev, libavformat-dev, libavutil-dev, libavfilter-dev,
+ libavdevice-dev, libswresample-dev, libpulse-dev, libpipewire-0.3-dev
+Standards-Version: 4.6.2
+Homepage: https://github.com/tihonove/wf-recorder
+Rules-Requires-Root: no
+
+Package: wf-recorder-nc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: wf-recorder with --no-cursor
+ wf-recorder 0.6.0 plus a --no-cursor flag: the pointer is not drawn into
+ the recording. Installed as wf-recorder-nc, so it lives next to the
+ distribution's wf-recorder.
